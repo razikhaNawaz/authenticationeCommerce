@@ -20,32 +20,41 @@ const AuthForm = () => {
 
     const enterdEmail=emailInputRef.current.value;
     const enterdPassword=passwordInputRef.current.value;
-
+    let url;
     if(isLogin){
-
+    url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDML3nMlIMsaSBUM4gV7xe8wTxyl6ADNjs';
     }else{
-      fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAiVRGGUUS_aUP2GUvXQB623zWE8bA06MQ',{
-        method:'POST',
-        body:JSON.stringify({
-          email:enterdEmail,
-          password:enterdPassword,
-          returnSecureToken:true
-        }),
-        headers:{
-          'Content-type':'application/json'
-        }
-      }).then((res)=>{
-        if(res.ok){
-          setSendingRequest(false)
-          console.log('ok',res);
-        }else{
-            return res.json().then((data)=>{
-            alert(data.error.message); //this gives error from server like week password
-              setSendingRequest(false);
-            })
-        }
-      })
+      url='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDML3nMlIMsaSBUM4gV7xe8wTxyl6ADNjs';
     }
+    fetch(url,{
+      method:'POST',
+      body:JSON.stringify({
+        email:enterdEmail,
+        password:enterdPassword,
+        returnSecureToken:true
+      }),
+      headers:{
+        'Content-type':'application/json'
+      }
+    }).then((res)=>{
+      setSendingRequest(false)
+      if(res.ok){
+        return res.json();
+        
+      }else{
+          return res.json().then((data)=>{
+        
+            console.log(data.error.message);
+              throw new Error(data.error.message);
+          })
+      }
+    })
+    .then((data)=>{
+      console.log(data)
+    })
+    .catch((error)=>{
+      console.log(error.message)
+    })
 
   }
 
