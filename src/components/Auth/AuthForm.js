@@ -1,5 +1,5 @@
 import { useRef, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+
 import AuthContext from '../store/auth-context';
 import classes from './AuthForm.module.css';
 
@@ -10,7 +10,7 @@ const AuthForm = () => {
   const AuthCtx= useContext(AuthContext);
   const emailInputRef=useRef();
   const passwordInputRef=useRef();
-  const history=useHistory()
+  
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -24,9 +24,9 @@ const AuthForm = () => {
     const enterdPassword=passwordInputRef.current.value;
     let url;
     if(isLogin){
-    url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDML3nMlIMsaSBUM4gV7xe8wTxyl6ADNjs';
+    url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDmGDvT90mBNRFDiFt_w3Haf-eC_lW9aZc';
     }else{
-      url='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDML3nMlIMsaSBUM4gV7xe8wTxyl6ADNjs';
+      url='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDmGDvT90mBNRFDiFt_w3Haf-eC_lW9aZc';
     }
     fetch(url,{
       method:'POST',
@@ -53,7 +53,7 @@ const AuthForm = () => {
     })
     .then((data)=>{
       AuthCtx.login(data.idToken);
-      history.replace('/profile')
+      
     })
     .catch((error)=>{
       console.log(error.message)
