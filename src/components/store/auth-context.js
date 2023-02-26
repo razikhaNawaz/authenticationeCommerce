@@ -13,7 +13,6 @@ export const AuthContextProvider=(props) =>{
     const [token, setToken]=useState(initialToken);
     const [tokenVal, setTokenVal]=useState(null);
     
-    
     const userIsLoggedIn=!!token; //if token is string and that is not empty that returns true, if token is string and that is empty then returns false
     
     const loginHandler=(token)=>{
@@ -21,8 +20,10 @@ export const AuthContextProvider=(props) =>{
         setTokenVal(token);
         localStorage.setItem('token', token);
     }
+    
     const logoutHandler=()=>{
         setToken(null);
+        setTokenVal(null);
         localStorage.removeItem('token');
     }
 

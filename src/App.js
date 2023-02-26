@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState} from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
@@ -8,7 +8,18 @@ import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 
 function App() {
+  const [render, setRender]=useState(true);
   const authCtx= useContext(AuthContext);
+
+  setTimeout(()=>{
+    console.log('setTimeout');
+    authCtx.logout();
+    setRender(false);
+  }, 5000);
+
+  useEffect(()=>{
+    console.log('useEffect called')
+  }, [render])
   return (
     <Layout>
       <Switch>
