@@ -1,11 +1,14 @@
+import { useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
+import AuthContext from './components/store/auth-context';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 
 function App() {
+  const authCtx= useContext(AuthContext);
   return (
     <Layout>
       <Switch>
@@ -13,10 +16,12 @@ function App() {
           <HomePage />
         </Route>
         <Route path='/auth'>
-          <AuthPage />
+          {authCtx.token ? <UserProfile />:
+          <AuthPage/>}
         </Route>
         <Route path='/profile'>
-          <UserProfile />
+          {authCtx.token ? <UserProfile /> :
+          <AuthPage />}
         </Route>
       </Switch>
     </Layout>
